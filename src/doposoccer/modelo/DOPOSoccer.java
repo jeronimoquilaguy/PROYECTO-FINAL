@@ -16,6 +16,12 @@ public class DOPOSoccer {
     private ControlJugador[] controles;
     private Partida partida;
 
+    /**
+     * Construye una instancia de DOPOSoccer.
+     * @param personajes valor de personajes.
+     * @param modalidades valor de modalidades.
+     * @param tiposPartido valor de tipos partido.
+     */
     public DOPOSoccer(List<Personaje> personajes, List<Modalidad> modalidades,
                       List<FabricaTipoPartido> tiposPartido) {
         this.personajes = personajes;
@@ -24,6 +30,15 @@ public class DOPOSoccer {
         this.perfiles = new Perfil[] { new Perfil("Jugador 1"), new Perfil("Jugador 2") };
     }
 
+    /**
+     * Realiza la operación de nueva partida.
+     * @param modalidad valor de modalidad.
+     * @param resolucion valor de resolucion.
+     * @param personaje1 valor de personaje1.
+     * @param personaje2 valor de personaje2.
+     * @param fabrica valor de fabrica.
+     * @param valor valor de valor.
+     */
     public void nuevaPartida(Modalidad modalidad, ResolucionCancha resolucion, Personaje personaje1,
                              Personaje personaje2, FabricaTipoPartido fabrica, int valor)
             throws DOPOSoccerException {
@@ -39,62 +54,111 @@ public class DOPOSoccer {
         partida = new Partida(cancha, izquierdo, derecho, tipo);
     }
 
+    /**
+     * Realiza la operación de actualizar.
+     * @param dt valor de dt.
+     */
     public void actualizar(double dt) {
         if (partida != null) {
             partida.actualizar(dt);
         }
     }
 
+    /**
+     * Realiza la operación de pausar.
+     */
     public void pausar() {
         if (partida != null) {
             partida.pausar();
         }
     }
 
+    /**
+     * Realiza la operación de reanudar.
+     */
     public void reanudar() {
         if (partida != null) {
             partida.reanudar();
         }
     }
 
+    /**
+     * Realiza la operación de terminar partida.
+     */
     public void terminarPartida() {
         if (partida != null) {
             partida.terminar();
         }
     }
 
+    /**
+     * Realiza la operación de presionar accion.
+     * @param numeroJugador valor de numero jugador.
+     * @param accion valor de accion.
+     */
     public void presionarAccion(int numeroJugador, Accion accion) {
         if (partida != null) {
             controles[numeroJugador].presionar(accion);
         }
     }
 
+    /**
+     * Realiza la operación de soltar accion.
+     * @param numeroJugador valor de numero jugador.
+     * @param accion valor de accion.
+     */
     public void soltarAccion(int numeroJugador, Accion accion) {
         if (partida != null) {
             controles[numeroJugador].soltar(accion);
         }
     }
 
+    /**
+     * Realiza la operación de mejorar estadistica.
+     * @param numeroJugador valor de numero jugador.
+     * @param tipo valor de tipo.
+     */
     public void mejorarEstadistica(int numeroJugador, TipoEstadistica tipo) throws DOPOSoccerException {
         perfiles[numeroJugador].mejorar(tipo);
     }
 
+    /**
+     * Realiza la operación de obtener partida.
+     * @return resultado de obtener partida.
+     */
     public Partida obtenerPartida() {
         return partida;
     }
 
+    /**
+     * Realiza la operación de obtener perfil.
+     * @param numeroJugador valor de numero jugador.
+     * @return resultado de obtener perfil.
+     */
     public Perfil obtenerPerfil(int numeroJugador) {
         return perfiles[numeroJugador];
     }
 
+    /**
+     * Realiza la operación de obtener personajes.
+     * @return resultado de obtener personajes.
+     */
     public List<Personaje> obtenerPersonajes() {
         return personajes;
     }
 
+    /**
+     * Realiza la operación de obtener modalidades.
+     * @return resultado de obtener modalidades.
+     */
     public List<Modalidad> obtenerModalidades() {
         return modalidades;
     }
 
+    /**
+     * Realiza la operación de obtener tipos partido.
+     * @return resultado de obtener tipos partido.
+     */
     public List<FabricaTipoPartido> obtenerTiposPartido() {
         return tiposPartido;
     }

@@ -5,6 +5,10 @@ package doposoccer.modelo;
  */
 public abstract class Modalidad {
 
+    /**
+     * Realiza la operación de obtener nombre.
+     * @return resultado de obtener nombre.
+     */
     public abstract String obtenerNombre();
 
     /** Crea el control del jugador numero 0 o 1. */

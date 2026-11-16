@@ -29,6 +29,14 @@ public class Jugador extends Entidad {
     private double enfriamientoPatada;
     private double animacionPatada;
 
+    /**
+     * Construye una instancia de Jugador.
+     * @param lado valor de lado.
+     * @param personaje valor de personaje.
+     * @param perfil valor de perfil.
+     * @param control valor de control.
+     * @param cancha valor de cancha.
+     */
     public Jugador(Lado lado, Personaje personaje, Perfil perfil, ControlJugador control, Cancha cancha) {
         this.lado = lado;
         this.personaje = personaje;
@@ -65,6 +73,9 @@ public class Jugador extends Entidad {
         }
     }
 
+    /**
+     * Realiza la operación de saltar.
+     */
     public void saltar() {
         if (efecto != null && !efecto.permiteSaltar()) {
             return;
@@ -76,6 +87,9 @@ public class Jugador extends Entidad {
         enSuelo = false;
     }
 
+    /**
+     * Realiza la operación de patear.
+     */
     public void patear() {
         if (efecto != null && !efecto.permitePatear()) {
             return;
@@ -112,6 +126,10 @@ public class Jugador extends Entidad {
 
     // ---------- Actualizacion ----------
 
+    /**
+     * Realiza la operación de actualizar.
+     * @param dt valor de dt.
+     */
     public void actualizar(double dt) {
         actualizarEfecto(dt);
         barraPoder = Math.min(1.0, barraPoder + dt / TIEMPO_CARGA_PODER);
@@ -160,6 +178,10 @@ public class Jugador extends Entidad {
         intencionX = 0;
     }
 
+    /**
+     * Realiza la operación de actualizar efecto.
+     * @param dt valor de dt.
+     */
     private void actualizarEfecto(double dt) {
         if (efecto == null) {
             return;
@@ -174,6 +196,10 @@ public class Jugador extends Entidad {
 
     // ---------- Dano y efectos ----------
 
+    /**
+     * Realiza la operación de recibir dano.
+     * @param dano valor de dano.
+     */
     public void recibirDano(double dano) {
         vida = Math.max(0, vida - dano);
         if (vida == 0 && !estaAturdido()) {
@@ -203,23 +229,39 @@ public class Jugador extends Entidad {
         return DANO_BASE_PATADA * perfil.obtenerEstadisticas().obtenerMultiplicadorKick();
     }
 
+    /**
+     * Realiza la operación de recibir gol.
+     */
     public void recibirGol() {
         barraPoder = Math.min(1.0, barraPoder + BONO_GOL_RECIBIDO);
     }
 
+    /**
+     * Realiza la operación de empujar.
+     * @param direccion valor de direccion.
+     */
     public void empujar(int direccion) {
         velX = direccion * 700 * cancha.obtenerEscala();
     }
 
+    /**
+     * Realiza la operación de lanzar al aire.
+     */
     public void lanzarAlAire() {
         velY = -600 * cancha.obtenerEscala();
         enSuelo = false;
     }
 
+    /**
+     * Realiza la operación de detener.
+     */
     public void detener() {
         velX = 0;
     }
 
+    /**
+     * Realiza la operación de restaurar vida.
+     */
     public void restaurarVida() {
         vida = vidaMaxima;
     }
@@ -257,6 +299,10 @@ public class Jugador extends Entidad {
         return new double[] { zonaX, y + alto * 0.4, alcance, alto * 0.6 };
     }
 
+    /**
+     * Realiza la operación de consumir patada pendiente.
+     * @return resultado de consumir patada pendiente.
+     */
     public boolean consumirPatadaPendiente() {
         boolean pendiente = patadaPendiente;
         patadaPendiente = false;
@@ -265,11 +311,19 @@ public class Jugador extends Entidad {
 
     // ---------- Datos derivados de las estadisticas ----------
 
+    /**
+     * Realiza la operación de obtener velocidad.
+     * @return resultado de obtener velocidad.
+     */
     private double obtenerVelocidad() {
         double base = 320 * cancha.obtenerEscala();
         return base * perfil.obtenerEstadisticas().obtenerFactor(TipoEstadistica.SPEED);
     }
 
+    /**
+     * Realiza la operación de obtener velocidad salto.
+     * @return resultado de obtener velocidad salto.
+     */
     private double obtenerVelocidadSalto() {
         double altura = 170 * cancha.obtenerEscala()
                 * perfil.obtenerEstadisticas().obtenerFactor(TipoEstadistica.JUMP);
@@ -278,58 +332,114 @@ public class Jugador extends Entidad {
 
     // ---------- Consultas ----------
 
+    /**
+     * Realiza la operación de obtener lado.
+     * @return resultado de obtener lado.
+     */
     public Lado obtenerLado() {
         return lado;
     }
 
+    /**
+     * Realiza la operación de obtener personaje.
+     * @return resultado de obtener personaje.
+     */
     public Personaje obtenerPersonaje() {
         return personaje;
     }
 
+    /**
+     * Realiza la operación de obtener perfil.
+     * @return resultado de obtener perfil.
+     */
     public Perfil obtenerPerfil() {
         return perfil;
     }
 
+    /**
+     * Realiza la operación de obtener control.
+     * @return resultado de obtener control.
+     */
     public ControlJugador obtenerControl() {
         return control;
     }
 
+    /**
+     * Realiza la operación de obtener vida.
+     * @return resultado de obtener vida.
+     */
     public double obtenerVida() {
         return vida;
     }
 
+    /**
+     * Realiza la operación de obtener vida maxima.
+     * @return resultado de obtener vida maxima.
+     */
     public double obtenerVidaMaxima() {
         return vidaMaxima;
     }
 
+    /**
+     * Realiza la operación de obtener barra poder.
+     * @return resultado de obtener barra poder.
+     */
     public double obtenerBarraPoder() {
         return barraPoder;
     }
 
+    /**
+     * Realiza la operación de obtener poder activo.
+     * @return resultado de obtener poder activo.
+     */
     public Poder obtenerPoderActivo() {
         return poderActivo;
     }
 
+    /**
+     * Realiza la operación de tiene poder activo.
+     * @return resultado de tiene poder activo.
+     */
     public boolean tienePoderActivo() {
         return poderActivo != null;
     }
 
+    /**
+     * Realiza la operación de obtener efecto.
+     * @return resultado de obtener efecto.
+     */
     public Efecto obtenerEfecto() {
         return efecto;
     }
 
+    /**
+     * Realiza la operación de esta aturdido.
+     * @return resultado de esta aturdido.
+     */
     public boolean estaAturdido() {
         return efecto != null && efecto.esAturdimiento();
     }
 
+    /**
+     * Realiza la operación de esta confundido.
+     * @return resultado de esta confundido.
+     */
     public boolean estaConfundido() {
         return efecto != null && efecto.esConfusion();
     }
 
+    /**
+     * Realiza la operación de esta pateando.
+     * @return resultado de esta pateando.
+     */
     public boolean estaPateando() {
         return animacionPatada > 0;
     }
 
+    /**
+     * Realiza la operación de esta en suelo.
+     * @return resultado de esta en suelo.
+     */
     public boolean estaEnSuelo() {
         return enSuelo;
     }

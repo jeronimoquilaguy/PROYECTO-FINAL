@@ -9,10 +9,19 @@ public class DOPOSoccerException extends Exception {
     public static final String GOLES_INVALIDOS = "El numero de goles para ganar debe ser mayor que cero.";
     public static final String NIVEL_MAXIMO = "La estadistica ya esta en el nivel maximo (10).";
 
+    /**
+     * Construye una instancia de DOPOSoccerException.
+     * @param mensaje valor de mensaje.
+     */
     public DOPOSoccerException(String mensaje) {
         super(mensaje);
     }
 
+    /**
+     * Construye una instancia de DOPOSoccerException.
+     * @param mensaje valor de mensaje.
+     * @param causa valor de causa.
+     */
     public DOPOSoccerException(String mensaje, Throwable causa) {
         super(mensaje, causa);
     }

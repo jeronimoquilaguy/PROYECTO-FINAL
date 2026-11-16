@@ -10,6 +10,10 @@ public class RegistroErrores {
 
     private static final String ARCHIVO = "errores.log";
 
+    /**
+     * Realiza la operación de registrar.
+     * @param e valor de e.
+     */
     public static void registrar(Exception e) {
         try {
             FileWriter escritor = new FileWriter(ARCHIVO, true);

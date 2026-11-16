@@ -9,6 +9,12 @@ public class ControlHumano implements ControlJugador {
     private Set<Accion> mantenidas = new HashSet<Accion>();
     private Set<Accion> toques = new HashSet<Accion>();
 
+    /**
+     * Realiza la operación de obtener acciones.
+     * @param jugador valor de jugador.
+     * @param partida valor de partida.
+     * @return resultado de obtener acciones.
+     */
     public Set<Accion> obtenerAcciones(Jugador jugador, Partida partida) {
         Set<Accion> resultado = new HashSet<Accion>(mantenidas);
         resultado.addAll(toques);
@@ -16,6 +22,10 @@ public class ControlHumano implements ControlJugador {
         return resultado;
     }
 
+    /**
+     * Realiza la operación de presionar.
+     * @param accion valor de accion.
+     */
     public void presionar(Accion accion) {
         toques.add(accion);
         if (!accion.esInstantanea()) {
@@ -23,6 +33,10 @@ public class ControlHumano implements ControlJugador {
         }
     }
 
+    /**
+     * Realiza la operación de soltar.
+     * @param accion valor de accion.
+     */
     public void soltar(Accion accion) {
         mantenidas.remove(accion);
     }

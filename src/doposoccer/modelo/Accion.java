@@ -17,6 +17,10 @@ public enum Accion {
         this.instantanea = instantanea;
     }
 
+    /**
+     * Realiza la operación de es instantanea.
+     * @return resultado de es instantanea.
+     */
     public boolean esInstantanea() {
         return instantanea;
     }

@@ -51,11 +51,18 @@ public class ControladorDOPOSoccer implements ActionListener, KeyListener {
     private long ultimoTiempo;
     private Set<Integer> teclasPresionadas = new HashSet<Integer>();
 
+    /**
+     * Construye una instancia de ControladorDOPOSoccer.
+     * @param modelo valor de modelo.
+     */
     public ControladorDOPOSoccer(DOPOSoccer modelo) {
         this.modelo = modelo;
         this.reloj = new Timer(RETARDO_MS, this);
     }
 
+    /**
+     * Realiza la operación de iniciar.
+     */
     public void iniciar() {
         ventana = new VentanaPrincipal(this);
         ventana.mostrarConfiguracion();
@@ -64,6 +71,15 @@ public class ControladorDOPOSoccer implements ActionListener, KeyListener {
 
     // ---------- Configuracion ----------
 
+    /**
+     * Realiza la operación de iniciar partida.
+     * @param modalidad valor de modalidad.
+     * @param resolucion valor de resolucion.
+     * @param personaje1 valor de personaje1.
+     * @param personaje2 valor de personaje2.
+     * @param tipo valor de tipo.
+     * @param valor valor de valor.
+     */
     public void iniciarPartida(int modalidad, int resolucion, int personaje1, int personaje2,
                                int tipo, int valor) {
         try {
@@ -87,6 +103,11 @@ public class ControladorDOPOSoccer implements ActionListener, KeyListener {
         }
     }
 
+    /**
+     * Realiza la operación de mejorar estadistica.
+     * @param jugador valor de jugador.
+     * @param numeroEstadistica valor de numero estadistica.
+     */
     public void mejorarEstadistica(int jugador, int numeroEstadistica) {
         try {
             modelo.mejorarEstadistica(jugador, TipoEstadistica.values()[numeroEstadistica]);
@@ -99,6 +120,10 @@ public class ControladorDOPOSoccer implements ActionListener, KeyListener {
 
     // ---------- Datos para la vista de configuracion ----------
 
+    /**
+     * Realiza la operación de obtener nombres modalidades.
+     * @return resultado de obtener nombres modalidades.
+     */
     public String[] obtenerNombresModalidades() {
         String[] nombres = new String[modelo.obtenerModalidades().size()];
         for (int i = 0; i < nombres.length; i++) {
@@ -107,6 +132,10 @@ public class ControladorDOPOSoccer implements ActionListener, KeyListener {
         return nombres;
     }
 
+    /**
+     * Realiza la operación de obtener nombres resoluciones.
+     * @return resultado de obtener nombres resoluciones.
+     */
     public String[] obtenerNombresResoluciones() {
         ResolucionCancha[] resoluciones = ResolucionCancha.values();
         String[] nombres = new String[resoluciones.length];
@@ -116,6 +145,10 @@ public class ControladorDOPOSoccer implements ActionListener, KeyListener {
         return nombres;
     }
 
+    /**
+     * Realiza la operación de obtener nombres personajes.
+     * @return resultado de obtener nombres personajes.
+     */
     public String[] obtenerNombresPersonajes() {
         String[] nombres = new String[modelo.obtenerPersonajes().size()];
         for (int i = 0; i < nombres.length; i++) {
@@ -124,6 +157,10 @@ public class ControladorDOPOSoccer implements ActionListener, KeyListener {
         return nombres;
     }
 
+    /**
+     * Realiza la operación de obtener nombres tipos.
+     * @return resultado de obtener nombres tipos.
+     */
     public String[] obtenerNombresTipos() {
         String[] nombres = new String[modelo.obtenerTiposPartido().size()];
         for (int i = 0; i < nombres.length; i++) {
@@ -132,19 +169,40 @@ public class ControladorDOPOSoccer implements ActionListener, KeyListener {
         return nombres;
     }
 
+    /**
+     * Realiza la operación de obtener etiqueta valor.
+     * @param tipo valor de tipo.
+     * @return resultado de obtener etiqueta valor.
+     */
     public String obtenerEtiquetaValor(int tipo) {
         return modelo.obtenerTiposPartido().get(tipo).obtenerEtiquetaValor();
     }
 
+    /**
+     * Realiza la operación de obtener valor por defecto.
+     * @param tipo valor de tipo.
+     * @return resultado de obtener valor por defecto.
+     */
     public int obtenerValorPorDefecto(int tipo) {
         FabricaTipoPartido fabrica = modelo.obtenerTiposPartido().get(tipo);
         return fabrica.obtenerValorPorDefecto();
     }
 
+    /**
+     * Realiza la operación de obtener texto puntos.
+     * @param jugador valor de jugador.
+     * @return resultado de obtener texto puntos.
+     */
     public String obtenerTextoPuntos(int jugador) {
         return "Puntos disponibles: " + modelo.obtenerPerfil(jugador).obtenerPuntos();
     }
 
+    /**
+     * Realiza la operación de obtener texto mejora.
+     * @param jugador valor de jugador.
+     * @param numeroEstadistica valor de numero estadistica.
+     * @return resultado de obtener texto mejora.
+     */
     public String obtenerTextoMejora(int jugador, int numeroEstadistica) {
         TipoEstadistica tipo = TipoEstadistica.values()[numeroEstadistica];
         Estadisticas estadisticas = modelo.obtenerPerfil(jugador).obtenerEstadisticas();
@@ -176,6 +234,9 @@ public class ControladorDOPOSoccer implements ActionListener, KeyListener {
         }
     }
 
+    /**
+     * Realiza la operación de pausar oreanudar.
+     */
     public void pausarOReanudar() {
         Partida partida = modelo.obtenerPartida();
         if (partida == null) {
@@ -190,11 +251,17 @@ public class ControladorDOPOSoccer implements ActionListener, KeyListener {
         ventana.refrescarJuego();
     }
 
+    /**
+     * Realiza la operación de terminar partida.
+     */
     public void terminarPartida() {
         modelo.terminarPartida();
         finalizarPartida();
     }
 
+    /**
+     * Realiza la operación de finalizar partida.
+     */
     private void finalizarPartida() {
         reloj.stop();
         ventana.refrescarJuego();
@@ -202,6 +269,11 @@ public class ControladorDOPOSoccer implements ActionListener, KeyListener {
         ventana.mostrarConfiguracion();
     }
 
+    /**
+     * Realiza la operación de armar mensaje final.
+     * @param partida valor de partida.
+     * @return resultado de armar mensaje final.
+     */
     private String armarMensajeFinal(Partida partida) {
         Jugador[] jugadores = partida.obtenerJugadores();
         String marcador = partida.obtenerMarcador().obtenerGoles(jugadores[0]) + " - "
@@ -231,6 +303,10 @@ public class ControladorDOPOSoccer implements ActionListener, KeyListener {
         return e.getKeyCode();
     }
 
+    /**
+     * Realiza la operación de key pressed.
+     * @param e valor de e.
+     */
     public void keyPressed(KeyEvent e) {
         int codigo = obtenerCodigo(e);
         if (codigo == KeyEvent.VK_P) {
@@ -245,7 +321,7 @@ public class ControladorDOPOSoccer implements ActionListener, KeyListener {
             return;
         }
         if (teclasPresionadas.contains(codigo)) {
-            return; // ignora la repeticion automatica del teclado
+            return; 
         }
         teclasPresionadas.add(codigo);
         for (int jugador = 0; jugador < TECLAS.length; jugador++) {
@@ -257,6 +333,10 @@ public class ControladorDOPOSoccer implements ActionListener, KeyListener {
         }
     }
 
+    /**
+     * Realiza la operación de key released.
+     * @param e valor de e.
+     */
     public void keyReleased(KeyEvent e) {
         int codigo = obtenerCodigo(e);
         teclasPresionadas.remove(codigo);
@@ -269,6 +349,10 @@ public class ControladorDOPOSoccer implements ActionListener, KeyListener {
         }
     }
 
+    /**
+     * Realiza la operación de key typed.
+     * @param e valor de e.
+     */
     public void keyTyped(KeyEvent e) {
     }
 }

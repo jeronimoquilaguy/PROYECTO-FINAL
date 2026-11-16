@@ -13,6 +13,10 @@ public enum TipoEstadistica {
         this.nombre = nombre;
     }
 
+    /**
+     * Realiza la operación de obtener nombre.
+     * @return resultado de obtener nombre.
+     */
     public String obtenerNombre() {
         return nombre;
     }

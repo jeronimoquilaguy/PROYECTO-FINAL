@@ -23,6 +23,10 @@ import doposoccer.modelo.Personaje;
  */
 public class Main {
 
+    /**
+     * Realiza la operación de main.
+     * @param args valor de args.
+     */
     public static void main(String[] args) {
         List<Personaje> personajes = new ArrayList<>();
         personajes.add(new CoreaDelSur());
@@ -40,6 +44,9 @@ public class Main {
         final DOPOSoccer modelo = new DOPOSoccer(personajes, modalidades, tipos);
 
         SwingUtilities.invokeLater(new Runnable() {
+            /**
+             * Realiza la operación de run.
+             */
             public void run() {
                 ControladorDOPOSoccer controlador = new ControladorDOPOSoccer(modelo);
                 controlador.iniciar();

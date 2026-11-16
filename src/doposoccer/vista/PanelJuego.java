@@ -1,5 +1,17 @@
 package doposoccer.vista;
 
+import java.awt.AlphaComposite;
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.FontMetrics;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
+
+import javax.swing.JPanel;
+
 import doposoccer.controlador.ControladorDOPOSoccer;
 import doposoccer.modelo.Arco;
 import doposoccer.modelo.Balon;
@@ -11,38 +23,40 @@ import doposoccer.modelo.Jugador;
 import doposoccer.modelo.Partida;
 import doposoccer.modelo.TipoEstadistica;
 import doposoccer.modelo.TipoPartido;
-import java.awt.AlphaComposite;
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.FontMetrics;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.RenderingHints;
-import javax.swing.JPanel;
 
 /** Pantalla del juego: dibuja la cancha, los jugadores, el balon y la informacion de la partida. */
 public class PanelJuego extends JPanel {
 
-  
+    // Posiciones (relativas al balon) de los 7 balones falsos del poder Ilusion
     private static final int[][] SENUELOS = {
         { -140, -80 }, { 120, -120 }, { -60, 70 }, { 200, 30 }, { -230, 10 }, { 60, -200 }, { 150, 110 }
     };
 
     private Partida partida;
 
+    /**
+     * Construye una instancia de PanelJuego.
+     * @param controlador valor de controlador.
+     */
     public PanelJuego(ControladorDOPOSoccer controlador) {
         setFocusable(true);
         addKeyListener(controlador);
     }
 
+    /**
+     * Realiza la operación de preparar para.
+     * @param nuevaPartida valor de nueva partida.
+     */
     public void prepararPara(Partida nuevaPartida) {
         partida = nuevaPartida;
         Cancha cancha = partida.obtenerCancha();
         setPreferredSize(new Dimension((int) cancha.obtenerAncho(), (int) cancha.obtenerAlto()));
     }
 
+    /**
+     * Realiza la operación de paint component.
+     * @param g valor de g.
+     */
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         if (partida == null) {
@@ -67,6 +81,10 @@ public class PanelJuego extends JPanel {
 
     // ---------- Cancha ----------
 
+    /**
+     * Realiza la operación de dibujar cancha.
+     * @param g2 valor de g2.
+     */
     private void dibujarCancha(Graphics2D g2) {
         Cancha cancha = partida.obtenerCancha();
         int ancho = (int) cancha.obtenerAncho();
@@ -82,6 +100,11 @@ public class PanelJuego extends JPanel {
         g2.drawLine(ancho / 2, suelo, ancho / 2, (int) (suelo - 60 * cancha.obtenerEscala()));
     }
 
+    /**
+     * Realiza la operación de dibujar arco.
+     * @param g2 valor de g2.
+     * @param arco valor de arco.
+     */
     private void dibujarArco(Graphics2D g2, Arco arco) {
         int x = (int) arco.obtenerX();
         int y = (int) arco.obtenerYTravesano();
@@ -101,6 +124,11 @@ public class PanelJuego extends JPanel {
 
     // ---------- Jugadores ----------
 
+    /**
+     * Realiza la operación de dibujar jugador.
+     * @param g2 valor de g2.
+     * @param j valor de j.
+     */
     private void dibujarJugador(Graphics2D g2, Jugador j) {
         int x = (int) j.obtenerX();
         int y = (int) j.obtenerY();
@@ -109,7 +137,7 @@ public class PanelJuego extends JPanel {
         Color colorPersonaje = new Color(j.obtenerPersonaje().obtenerColorRgb());
         int frente = j.obtenerLado().obtenerDireccionFrente();
 
-       
+        // Aura del poder activo
         if (j.tienePoderActivo()) {
             Color colorAura = new Color(j.obtenerPoderActivo().obtenerColorRgb());
             g2.setColor(new Color(colorAura.getRed(), colorAura.getGreen(), colorAura.getBlue(), 110));
@@ -119,7 +147,7 @@ public class PanelJuego extends JPanel {
             g2.drawOval(x - ancho / 2, y - alto / 4, ancho * 2, (int) (alto * 1.5));
         }
 
-   
+        // Cuerpo, cabeza y ojo
         g2.setColor(colorPersonaje);
         g2.fillRoundRect(x, y + ancho / 2, ancho, alto - ancho / 2, 12, 12);
         g2.setColor(new Color(255, 224, 189));
@@ -133,7 +161,7 @@ public class PanelJuego extends JPanel {
         g2.setColor(Color.BLACK);
         g2.fillOval(ojoX + frente * ancho / 20 + ancho / 16, y + ancho / 4 + ancho / 16, ancho / 10, ancho / 10);
 
-      
+        // Pie al patear
         if (j.estaPateando()) {
             double[] zona = j.obtenerZonaPie();
             g2.setColor(Color.DARK_GRAY);
@@ -141,7 +169,7 @@ public class PanelJuego extends JPanel {
                     (int) (zona[3] * 0.4), 8, 8);
         }
 
-       
+        // Efecto sobre el jugador
         Efecto efecto = j.obtenerEfecto();
         if (efecto != null) {
             g2.setColor(new Color(255, 0, 0, 200));
@@ -155,6 +183,10 @@ public class PanelJuego extends JPanel {
 
     // ---------- Balon ----------
 
+    /**
+     * Realiza la operación de dibujar balon.
+     * @param g2 valor de g2.
+     */
     private void dibujarBalon(Graphics2D g2) {
         Balon balon = partida.obtenerBalon();
         double escala = partida.obtenerCancha().obtenerEscala();
@@ -166,7 +198,6 @@ public class PanelJuego extends JPanel {
             }
         }
         if (confusion) {
-            // Los 8 balones se ven iguales: el rival no sabe cual es el real
             for (int i = 0; i < SENUELOS.length; i++) {
                 dibujarUnBalon(g2, balon.obtenerX() + SENUELOS[i][0] * escala,
                         balon.obtenerY() + SENUELOS[i][1] * escala, balon.obtenerRadio(), null);
@@ -179,6 +210,14 @@ public class PanelJuego extends JPanel {
         dibujarUnBalon(g2, balon.obtenerX(), balon.obtenerY(), balon.obtenerRadio(), estela);
     }
 
+    /**
+     * Realiza la operación de dibujar un balon.
+     * @param g2 valor de g2.
+     * @param x valor de x.
+     * @param y valor de y.
+     * @param radio valor de radio.
+     * @param estela valor de estela.
+     */
     private void dibujarUnBalon(Graphics2D g2, double x, double y, double radio, Color estela) {
         int diametro = (int) (radio * 2);
         if (estela != null) {
@@ -195,6 +234,10 @@ public class PanelJuego extends JPanel {
 
     // ---------- Informacion ----------
 
+    /**
+     * Realiza la operación de dibujar informacion.
+     * @param g2 valor de g2.
+     */
     private void dibujarInformacion(Graphics2D g2) {
         int ancho = getWidth();
         Jugador[] jugadores = partida.obtenerJugadores();
@@ -222,6 +265,12 @@ public class PanelJuego extends JPanel {
         centrarTexto(g2, detalle, ancho / 2, 56);
     }
 
+    /**
+     * Realiza la operación de dibujar datos jugador.
+     * @param g2 valor de g2.
+     * @param j valor de j.
+     * @param x valor de x.
+     */
     private void dibujarDatosJugador(Graphics2D g2, Jugador j, int x) {
         g2.setColor(Color.BLACK);
         g2.setFont(new Font("SansSerif", Font.BOLD, 13));
@@ -258,6 +307,16 @@ public class PanelJuego extends JPanel {
         g2.drawString(datos, x, 78);
     }
 
+    /**
+     * Realiza la operación de dibujar barra.
+     * @param g2 valor de g2.
+     * @param x valor de x.
+     * @param y valor de y.
+     * @param ancho valor de ancho.
+     * @param alto valor de alto.
+     * @param fraccion valor de fraccion.
+     * @param color valor de color.
+     */
     private void dibujarBarra(Graphics2D g2, int x, int y, int ancho, int alto, double fraccion, Color color) {
         g2.setColor(new Color(60, 60, 60));
         g2.fillRect(x, y, ancho, alto);
@@ -268,6 +327,13 @@ public class PanelJuego extends JPanel {
         g2.drawRect(x, y, ancho, alto);
     }
 
+    /**
+     * Realiza la operación de centrar texto.
+     * @param g2 valor de g2.
+     * @param texto valor de texto.
+     * @param centroX valor de centro x.
+     * @param y valor de y.
+     */
     private void centrarTexto(Graphics2D g2, String texto, int centroX, int y) {
         FontMetrics medidas = g2.getFontMetrics();
         g2.drawString(texto, centroX - medidas.stringWidth(texto) / 2, y);
@@ -275,6 +341,10 @@ public class PanelJuego extends JPanel {
 
     // ---------- Mensajes grandes ----------
 
+    /**
+     * Realiza la operación de dibujar mensajes.
+     * @param g2 valor de g2.
+     */
     private void dibujarMensajes(Graphics2D g2) {
         int ancho = getWidth();
         int alto = getHeight();

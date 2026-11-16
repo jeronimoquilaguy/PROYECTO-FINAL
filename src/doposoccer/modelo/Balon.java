@@ -14,6 +14,10 @@ public class Balon extends Entidad {
     private Jugador dueno;
     private double tiempoPoder;
 
+    /**
+     * Construye una instancia de Balon.
+     * @param cancha valor de cancha.
+     */
     public Balon(Cancha cancha) {
         this.cancha = cancha;
         this.radio = 15 * cancha.obtenerEscala();
@@ -22,6 +26,10 @@ public class Balon extends Entidad {
         reiniciarEnCentro();
     }
 
+    /**
+     * Realiza la operación de obtener radio.
+     * @return resultado de obtener radio.
+     */
     public double obtenerRadio() {
         return radio;
     }
@@ -33,6 +41,10 @@ public class Balon extends Entidad {
         terminarTiroPoder();
     }
 
+    /**
+     * Realiza la operación de actualizar.
+     * @param dt valor de dt.
+     */
     public void actualizar(double dt) {
         if (poder != null) {
             tiempoPoder = tiempoPoder - dt;
@@ -47,6 +59,10 @@ public class Balon extends Entidad {
         rebotarEnBordes();
     }
 
+    /**
+     * Realiza la operación de rebotar en suelo.
+     * @param dt valor de dt.
+     */
     private void rebotarEnSuelo(double dt) {
         double suelo = cancha.obtenerSuelo();
         if (y + alto >= suelo) {
@@ -61,6 +77,9 @@ public class Balon extends Entidad {
         }
     }
 
+    /**
+     * Realiza la operación de rebotar en bordes.
+     */
     private void rebotarEnBordes() {
         if (x < 0) {
             x = 0;
@@ -92,6 +111,11 @@ public class Balon extends Entidad {
         rebote = nuevoRebote;
     }
 
+    /**
+     * Realiza la operación de iniciar tiro poder.
+     * @param nuevoPoder valor de nuevo poder.
+     * @param nuevoDueno valor de nuevo dueno.
+     */
     public void iniciarTiroPoder(Poder nuevoPoder, Jugador nuevoDueno) {
         poder = nuevoPoder;
         dueno = nuevoDueno;
@@ -107,14 +131,26 @@ public class Balon extends Entidad {
         rebote = REBOTE_NORMAL;
     }
 
+    /**
+     * Realiza la operación de tiene poder en vuelo.
+     * @return resultado de tiene poder en vuelo.
+     */
     public boolean tienePoderEnVuelo() {
         return poder != null;
     }
 
+    /**
+     * Realiza la operación de obtener poder.
+     * @return resultado de obtener poder.
+     */
     public Poder obtenerPoder() {
         return poder;
     }
 
+    /**
+     * Realiza la operación de obtener dueno.
+     * @return resultado de obtener dueno.
+     */
     public Jugador obtenerDueno() {
         return dueno;
     }

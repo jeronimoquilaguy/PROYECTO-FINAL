@@ -5,6 +5,13 @@ public class Colisiones {
 
     private static final double RESTITUCION = 0.8;
 
+    /**
+     * Realiza la operación de limitar.
+     * @param valor valor de valor.
+     * @param minimo valor de minimo.
+     * @param maximo valor de maximo.
+     * @return resultado de limitar.
+     */
     private static double limitar(double valor, double minimo, double maximo) {
         if (valor < minimo) {
             return minimo;

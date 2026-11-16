@@ -10,6 +10,11 @@ public class Marcador {
     private Jugador primero;
     private Jugador segundo;
 
+    /**
+     * Construye una instancia de Marcador.
+     * @param primero valor de primero.
+     * @param segundo valor de segundo.
+     */
     public Marcador(Jugador primero, Jugador segundo) {
         this.primero = primero;
         this.segundo = segundo;
@@ -17,14 +22,27 @@ public class Marcador {
         goles.put(segundo, 0);
     }
 
+    /**
+     * Realiza la operación de sumar gol.
+     * @param jugador valor de jugador.
+     */
     public void sumarGol(Jugador jugador) {
         goles.put(jugador, goles.get(jugador) + 1);
     }
 
+    /**
+     * Realiza la operación de obtener goles.
+     * @param jugador valor de jugador.
+     * @return resultado de obtener goles.
+     */
     public int obtenerGoles(Jugador jugador) {
         return goles.get(jugador);
     }
 
+    /**
+     * Realiza la operación de obtener mayor numero de goles.
+     * @return resultado de obtener mayor numero de goles.
+     */
     public int obtenerMayorNumeroDeGoles() {
         return Math.max(goles.get(primero), goles.get(segundo));
     }

@@ -16,14 +16,26 @@ public enum ResolucionCancha {
         this.alto = alto;
     }
 
+    /**
+     * Realiza la operación de obtener nombre.
+     * @return resultado de obtener nombre.
+     */
     public String obtenerNombre() {
         return nombre;
     }
 
+    /**
+     * Realiza la operación de obtener ancho.
+     * @return resultado de obtener ancho.
+     */
     public int obtenerAncho() {
         return ancho;
     }
 
+    /**
+     * Realiza la operación de obtener alto.
+     * @return resultado de obtener alto.
+     */
     public int obtenerAlto() {
         return alto;
     }

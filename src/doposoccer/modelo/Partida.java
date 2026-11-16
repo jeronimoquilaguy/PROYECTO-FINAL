@@ -34,6 +34,10 @@ public class Partida {
 
     // ---------- Ciclo del juego ----------
 
+    /**
+     * Realiza la operación de actualizar.
+     * @param dt valor de dt.
+     */
     public void actualizar(double dt) {
         if (estado != EstadoPartida.EN_JUEGO) {
             return;
@@ -54,6 +58,10 @@ public class Partida {
         verificarFin();
     }
 
+    /**
+     * Realiza la operación de mover jugadores.
+     * @param dt valor de dt.
+     */
     private void moverJugadores(double dt) {
         for (int i = 0; i < jugadores.length; i++) {
             Jugador j = jugadores[i];
@@ -62,6 +70,9 @@ public class Partida {
         }
     }
 
+    /**
+     * Realiza la operación de resolver choques.
+     */
     private void resolverChoques() {
         for (int i = 0; i < jugadores.length; i++) {
             Jugador j = jugadores[i];
@@ -93,6 +104,9 @@ public class Partida {
         }
     }
 
+    /**
+     * Realiza la operación de resolver patadas.
+     */
     private void resolverPatadas() {
         for (int i = 0; i < jugadores.length; i++) {
             Jugador j = jugadores[i];
@@ -110,6 +124,9 @@ public class Partida {
         }
     }
 
+    /**
+     * Realiza la operación de detectar gol.
+     */
     private void detectarGol() {
         for (int k = 0; k < arcos.length; k++) {
             if (arcos[k].contiene(balon)) {
@@ -125,6 +142,9 @@ public class Partida {
         }
     }
 
+    /**
+     * Realiza la operación de verificar fin.
+     */
     private void verificarFin() {
         if (tipoPartido.haTerminado(marcador)) {
             finalizar(tipoPartido.obtenerGanador(marcador));
@@ -145,6 +165,9 @@ public class Partida {
         }
     }
 
+    /**
+     * Realiza la operación de reiniciar posiciones.
+     */
     private void reiniciarPosiciones() {
         balon.reiniciarEnCentro();
         for (int i = 0; i < jugadores.length; i++) {
@@ -154,12 +177,18 @@ public class Partida {
 
     // ---------- Control de la partida ----------
 
+    /**
+     * Realiza la operación de pausar.
+     */
     public void pausar() {
         if (estado == EstadoPartida.EN_JUEGO) {
             estado = EstadoPartida.PAUSADO;
         }
     }
 
+    /**
+     * Realiza la operación de reanudar.
+     */
     public void reanudar() {
         if (estado == EstadoPartida.PAUSADO) {
             estado = EstadoPartida.EN_JUEGO;
@@ -176,30 +205,58 @@ public class Partida {
 
     // ---------- Consultas ----------
 
+    /**
+     * Realiza la operación de obtener cancha.
+     * @return resultado de obtener cancha.
+     */
     public Cancha obtenerCancha() {
         return cancha;
     }
 
+    /**
+     * Realiza la operación de obtener balon.
+     * @return resultado de obtener balon.
+     */
     public Balon obtenerBalon() {
         return balon;
     }
 
+    /**
+     * Realiza la operación de obtener jugadores.
+     * @return resultado de obtener jugadores.
+     */
     public Jugador[] obtenerJugadores() {
         return jugadores;
     }
 
+    /**
+     * Realiza la operación de obtener arcos.
+     * @return resultado de obtener arcos.
+     */
     public Arco[] obtenerArcos() {
         return arcos;
     }
 
+    /**
+     * Realiza la operación de obtener marcador.
+     * @return resultado de obtener marcador.
+     */
     public Marcador obtenerMarcador() {
         return marcador;
     }
 
+    /**
+     * Realiza la operación de obtener tipo partido.
+     * @return resultado de obtener tipo partido.
+     */
     public TipoPartido obtenerTipoPartido() {
         return tipoPartido;
     }
 
+    /**
+     * Realiza la operación de obtener estado.
+     * @return resultado de obtener estado.
+     */
     public EstadoPartida obtenerEstado() {
         return estado;
     }
@@ -209,14 +266,27 @@ public class Partida {
         return ganador;
     }
 
+    /**
+     * Realiza la operación de obtener puntos ganados.
+     * @param numeroJugador valor de numero jugador.
+     * @return resultado de obtener puntos ganados.
+     */
     public int obtenerPuntosGanados(int numeroJugador) {
         return puntosGanados[numeroJugador];
     }
 
+    /**
+     * Realiza la operación de hay celebracion gol.
+     * @return resultado de hay celebracion gol.
+     */
     public boolean hayCelebracionGol() {
         return pausaGol > 0;
     }
 
+    /**
+     * Realiza la operación de obtener ultimo anotador.
+     * @return resultado de obtener ultimo anotador.
+     */
     public Jugador obtenerUltimoAnotador() {
         return ultimoAnotador;
     }

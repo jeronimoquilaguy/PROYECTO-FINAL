@@ -6,6 +6,10 @@ package doposoccer.modelo;
  */
 public abstract class Poder {
 
+    /**
+     * Realiza la operación de obtener nombre.
+     * @return resultado de obtener nombre.
+     */
     public abstract String obtenerNombre();
 
     /** Dano base del tiro (antes de multiplicar por el multiplicadorKick). */

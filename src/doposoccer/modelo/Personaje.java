@@ -9,15 +9,28 @@ public abstract class Personaje {
     private String pais;
     private int colorRgb;
 
+    /**
+     * Construye una instancia de Personaje.
+     * @param pais valor de pais.
+     * @param colorRgb valor de color rgb.
+     */
     protected Personaje(String pais, int colorRgb) {
         this.pais = pais;
         this.colorRgb = colorRgb;
     }
 
+    /**
+     * Realiza la operación de obtener pais.
+     * @return resultado de obtener pais.
+     */
     public String obtenerPais() {
         return pais;
     }
 
+    /**
+     * Realiza la operación de obtener color rgb.
+     * @return resultado de obtener color rgb.
+     */
     public int obtenerColorRgb() {
         return colorRgb;
     }
